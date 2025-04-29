@@ -1,38 +1,40 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: engiacom <engiacom@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/12 16:02:42 by engiacom          #+#    #+#              #
-#    Updated: 2024/11/13 15:48:48 by engiacom         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME        = libftprintf.a
 
-NAME	= libftprintf.a
+# Dossiers
+SRC_DIR     = src
+OBJ_DIR     = obj
+INC_DIR     = include
 
-SRCS	= ft_printf.c ft_strlen.c ft_utils.c ft_putnbr.c
+# Fichiers sources et objets
+SRCS        = $(wildcard $(SRC_DIR)/*.c)
+OBJS        = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
-OBJS	= $(SRCS:.c=.o)
+# Compilation
+CC          = gcc
+CFLAGS      = -Wall -Wextra -Werror -I$(INC_DIR)
 
-CC	= gcc
+# Commandes
+RM          = rm -rf
+MKDIR       = mkdir -p
 
-RM	= rm -f
+# Règles
+all: $(OBJ_DIR) $(NAME)
 
-CFLAGS	= -Wall -Wextra -Werror
+$(OBJ_DIR):
+	$(MKDIR) $(OBJ_DIR)
 
-all:	$(NAME)
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
-$(NAME):	$(OBJS)
-			ar rcs $(NAME) $(OBJS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-			$(RM) $(OBJS)
+	$(RM) $(OBJ_DIR)
 
-fclean:		clean
-			$(RM) $(NAME)
+fclean: clean
+	$(RM) $(NAME)
 
-re:			fclean all
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re
