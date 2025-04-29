@@ -11,3 +11,6 @@
 - Parsing
 - Bufferisation
 - Fonctions variadiques en C
+
+## Sujet du projet
+Vous pouvez consulter le sujet officiel ici : [📑 Sujet PDF](./ft_printf.subject.pdf)
